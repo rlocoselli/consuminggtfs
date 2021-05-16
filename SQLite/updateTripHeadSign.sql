@@ -1,0 +1,6 @@
+UPDATE trip set trip_headsign = (select stop_name from STOPS s, STOPSTIME s2 
+where s2.trip_id = trip.trip_id
+and   stop_sequence in(select max(stop_sequence) 
+                       from STOPSTIME s3 
+                       where s3.stop_id = s2.stop_id 
+                       and   s3.trip_id = s2.trip_id))
